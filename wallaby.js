@@ -8,14 +8,16 @@ module.exports = function () {
       'test/**/*Spec.js'
     ],
 
-    setup: function () {
-      global.expect = require('chai').expect;
+    env: {
+      type: 'node',
+      runer: 'node'
     },
 
-    env: {
-      type: 'node'
-      // More options are described here
-      // http://wallabyjs.com/docs/integration/node.html
+    bootstrap: function (w) {
+      const mocha = w.testFramework;
+      mocha.grep('@slow').invert();
+
+      global.expect = require('chai').expect;
     }
   };
 };
